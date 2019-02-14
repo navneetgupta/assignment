@@ -46,7 +46,8 @@ defmodule SamMedia.MixProject do
       {:commanded_ecto_projections, "~> 0.8"},
       {:exconstructor, "~> 1.1.0"},
       {:commanded, "~> 0.18.0"},
-      {:commanded_eventstore_adapter, "~> 0.5"}
+      {:commanded_eventstore_adapter, "~> 0.5"},
+      {:ex_machina, "~> 2.1", only: :test}
     ]
   end
 

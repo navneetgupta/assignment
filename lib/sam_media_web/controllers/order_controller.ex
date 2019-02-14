@@ -6,7 +6,7 @@ defmodule SamMediaWeb.OrderController do
   def index(conn, _params) do
     render(conn, "index.json",
       orders: [
-        %{uuid: "qwerzddfesdfercxcsd", amount: 11201.12, items: [], description: "description"}
+        # %{uuid: "qwerzddfesdfercxcsd", amount: 11201.12, items: [], description: "description"}
       ]
     )
   end

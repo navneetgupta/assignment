@@ -19,19 +19,17 @@ defmodule SamMediaWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias SamMediaWeb.Router.Helpers, as: Routes
+
+      import SamMediaWeb.Router.Helpers
+      import SamMedia.Factory
 
       # The default endpoint for testing
       @endpoint SamMediaWeb.Endpoint
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(SamMedia.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(SamMedia.Repo, {:shared, self()})
-    end
+  setup do
+    SamMedia.Storage.reset!()
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end

@@ -12,4 +12,9 @@ defmodule SamMediaWeb.ErrorViewTest do
     assert render(SamMediaWeb.ErrorView, "500.json", []) ==
              %{errors: %{detail: "Internal Server Error"}}
   end
+
+  test "render any other" do
+    assert render(SamMediaWeb.ErrorView, "505.json", []) ==
+             %{errors: %{detail: "Internal Server Error"}}
+  end
 end

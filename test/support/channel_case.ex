@@ -25,12 +25,8 @@ defmodule SamMediaWeb.ChannelCase do
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(SamMedia.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(SamMedia.Repo, {:shared, self()})
-    end
+  setup do
+    SamMedia.Storage.reset!()
 
     :ok
   end
