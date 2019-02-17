@@ -7,7 +7,6 @@ defmodule SamMedia.Payment.Commands.InitiatePayment do
 
   defstruct uuid: "",
             order_uuid: "",
-            transaction_uuid: "",
             card_number: "",
             card_holder_name: "",
             card_expiry: "",

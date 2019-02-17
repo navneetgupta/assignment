@@ -10,5 +10,6 @@ defmodule SamMediaWeb.Router do
     pipe_through :api
 
     get("/orders", OrderController, :index)
+    post("/orders", OrderController, :create)
   end
 end

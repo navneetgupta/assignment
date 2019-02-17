@@ -1,4 +1,4 @@
-defmodule SamMedia.Order.Enums.EnumsPayment do
+defmodule SamMedia.Payment.Enums.EnumsPayment do
   import SamMedia.Support.EnumsHelper
 
   enum "payment_status" do

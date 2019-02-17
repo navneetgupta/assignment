@@ -17,7 +17,7 @@ defmodule SamMedia.Payment.Aggregates.Payment do
 
   alias SamMedia.Payment.Commands.{InitiatePayment, CompletePayment, ProcessRefund}
   alias SamMedia.Payment.Events.{PaymentIntitated, PaymentCompleted, RefundProcessed}
-  alias SamMedia.Order.Enums.EnumsPayment
+  alias SamMedia.Payment.Enums.EnumsPayment
 
   @successful_payment EnumsPayment.payment_status()[:SUCCESS]
 
@@ -35,12 +35,16 @@ defmodule SamMedia.Payment.Aggregates.Payment do
     }
   end
 
-  def execute(%Payment{uuid: uuid, amount: amount} = payment, %CompletePayment{} = complete) do
+  def execute(
+        %Payment{uuid: uuid, amount: amount, order_uuid: order_uuid} = payment,
+        %CompletePayment{} = complete
+      ) do
     %PaymentCompleted{
       payment_uuid: uuid,
       txn_uuid: complete.txn_uuid,
       status: complete.status,
-      order_amount: amount
+      order_amount: amount,
+      order_uuid: order_uuid
     }
   end
 

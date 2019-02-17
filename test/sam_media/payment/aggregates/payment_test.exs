@@ -2,7 +2,7 @@ defmodule SamMedia.Payment.Aggregates.PaymentTest do
   use SamMedia.AggregateCase, aggregate: SamMedia.Payment.Aggregates.Payment
 
   alias SamMedia.Payment.Events.{PaymentIntitated, PaymentCompleted, RefundProcessed}
-  alias SamMedia.Order.Enums.EnumsPayment
+  alias SamMedia.Payment.Enums.EnumsPayment
 
   @status_success EnumsPayment.payment_status()[:SUCCESS]
   @status_success EnumsPayment.payment_status()[:DECLINED]
@@ -48,7 +48,8 @@ defmodule SamMedia.Payment.Aggregates.PaymentTest do
             payment_uuid: payment.uuid,
             txn_uuid: txn_uuid,
             status: @status_success,
-            order_amount: payment.amount
+            order_amount: payment.amount,
+            order_uuid: payment.order_uuid
           }
         ]
       )
@@ -61,6 +62,18 @@ defmodule SamMedia.Payment.Aggregates.PaymentTest do
 
     {payment, _events, _error} =
       execute(List.wrap(build(:initiate_payment, uuid: uuid, order_uuid: order_uuid)))
+
+    [
+      payment: payment
+    ]
+  end
+
+  defp initiate_invalid_payment(_ctx) do
+    uuid = UUID.uuid4()
+    order_uuid = UUID.uuid4()
+
+    {payment, _events, _error} =
+      execute(List.wrap(build(:initiate_invalid_payment, uuid: uuid, order_uuid: order_uuid)))
 
     [
       payment: payment

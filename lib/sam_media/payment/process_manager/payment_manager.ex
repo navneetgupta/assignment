@@ -13,6 +13,7 @@ defmodule SamMedia.Payment.ProcessManager.PaymentManager do
 
   alias SamMedia.Payment.Events.{PaymentIntitated, PaymentCompleted}
   alias SamMedia.Payment.Commands.CompletePayment
+  alias SamMedia.Payment.Enums.EnumsPayment
 
   def interested?(%PaymentIntitated{payment_uuid: payment_uuid}), do: {:start, payment_uuid}
   def interested?(%PaymentCompleted{payment_uuid: payment_uuid}), do: {:stop, payment_uuid}
