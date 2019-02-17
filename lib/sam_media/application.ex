@@ -6,13 +6,15 @@ defmodule SamMedia.Application do
   use Application
 
   def start(_type, _args) do
+    import Supervisor.Spec
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
-      SamMedia.Repo,
+      supervisor(SamMedia.Repo, []),
       # Start the endpoint when the application starts
-      SamMediaWeb.Endpoint
+      supervisor(SamMediaWeb.Endpoint, []),
       # Starts a worker by calling: SamMedia.Worker.start_link(arg)
+      supervisor(SamMedia.Order.Supervisor, [])
       # {SamMedia.Worker, arg},
     ]
 

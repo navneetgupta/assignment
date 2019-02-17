@@ -14,8 +14,12 @@ defmodule SamMediaWeb.OrderView do
     %{
       id: order.uuid,
       amount: order.amount,
-      items: order.items,
-      description: order.description
+      inserted_at: order.inserted_at,
+      updated_at: order.updated_at,
+      payment_status: order.payment_status,
+      user_mobile: order.user_mobile,
+      user_name: order.user_name,
+      status: order.status
     }
   end
 end

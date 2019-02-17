@@ -37,7 +37,7 @@ defmodule SamMedia.Payment.Commands.InitiatePayment do
 
   validates(:card_security_code,
     presence: [message: "can't be empty"],
-    card_security_code: true
+    security_code: true
   )
 
   @doc """

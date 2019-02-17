@@ -5,7 +5,7 @@ Build 2 small applications (micro-services) written with Elixir. Each of the ser
 ### Orders Application
 
 1. Responsible for orders management
-2. Each order can be at the single state at the time 
+2. Each order can be at the single state at the time
 3. Order states - created, confirmed, delivered, cancelled
 4. After order was created Orders App should trigger Payments App call to process a payment for the current order
 5. An Application should have endpoints to:
@@ -35,3 +35,22 @@ Build 2 small applications (micro-services) written with Elixir. Each of the ser
 
 Task should be completed with the all necessary practices in your opinion: CodeStyle, Lint, Tests etc.
 Feel free to use your creativity to accomplish the task.
+
+
+-- WIP
+
+-- Runing the code
+-- Require Redis for clustering
+-- reuqire postgres configuration in config/dev.exs
+```elixir
+export NODE="sam_media"
+export PORT=4000
+
+mix deps.get
+mix deps.compile
+
+mix do event_store.create, event_store.init
+mix ecto.create
+mix ecto.migrate
+mix phx.server
+```

@@ -21,6 +21,10 @@ defmodule SamMedia.Order.Aggregates.Order do
   end
 
   def execute(%Order{} = order, %CreateOrder{} = create) do
+    IO.puts("Aggregate------------------------------")
+    IO.inspect(order)
+    IO.inspect(create)
+
     %OrderCreated{
       order_uuid: create.uuid,
       card_number: create.card_number,

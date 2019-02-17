@@ -13,16 +13,6 @@ defmodule SamMediaWeb.OrderController do
 
   def create(conn, %{
         "order" => order_params
-        # %{
-        #   "user_name" => user_name,
-        #   "user_email" => user_email,
-        #   "amount" => amount,
-        #   "user_mobile" => user_mobile,
-        #   "card_number" => card_number,
-        #   "card_expiry" => card_expiry,
-        #   "card_security_code" => card_security_code,
-        #   "card_holder_name" => card_holder_name
-        # } = 
       }) do
     with {:ok, %OrderPro{} = order} <-
            Order.create_order(order_params) do
@@ -30,5 +20,12 @@ defmodule SamMediaWeb.OrderController do
       |> put_status(:created)
       |> render("show.json", order: order)
     end
+  end
+
+  def get(conn, %{
+        "id" => order_uuid
+      }) do
+    order = Order.get_order!(order_uuid)
+    render(conn, "show.json", order: order)
   end
 end

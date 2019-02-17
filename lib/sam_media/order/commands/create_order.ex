@@ -42,7 +42,7 @@ defmodule SamMedia.Order.Commands.CreateOrder do
 
   validates(:card_security_code,
     presence: [message: "can't be empty"],
-    card_security_code: true
+    security_code: true
   )
 
   def assign_uuid(%CreateOrder{} = create_order, uuid) do

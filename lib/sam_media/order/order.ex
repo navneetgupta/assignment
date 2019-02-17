@@ -14,7 +14,7 @@ defmodule SamMedia.Order do
       |> CreateOrder.assign_uuid(uuid)
 
     with {:ok, version} <- Router.dispatch(create_order, include_aggregate_version: true) do
-      OrderPubSub.wait_for(Order, uuid, version)
+      OrderPubSub.wait_for(OrderPro, uuid, version)
     else
       reply -> reply
     end
@@ -23,4 +23,6 @@ defmodule SamMedia.Order do
   def list_orders do
     Repo.all(OrderPro)
   end
+
+  def get_order!(uuid), do: Repo.get!(OrderPro, uuid)
 end

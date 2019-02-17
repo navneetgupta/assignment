@@ -56,6 +56,7 @@ config :phoenix, :plug_init_mode, :runtime
 # Configure your database
 
 config :eventstore, EventStore.Storage,
+  migration_timestamps: [type: :naive_datetime_usec],
   serializer: Commanded.Serialization.JsonSerializer,
   username: "postgres",
   password: "postgres",
@@ -65,8 +66,9 @@ config :eventstore, EventStore.Storage,
 
 # Configure the read store database
 config :sam_media, SamMedia.Repo,
+  migration_timestamps: [type: :naive_datetime_usec],
   username: "postgres",
   password: "postgres",
-  database: "sam_media_dev",
+  database: "sam_media_readstore_dev",
   hostname: "localhost",
   pool_size: 10

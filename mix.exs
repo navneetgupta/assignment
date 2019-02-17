@@ -40,7 +40,7 @@ defmodule SamMedia.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:vex, "~> 0.7"},
       {:commanded_ecto_projections, "~> 0.8"},
