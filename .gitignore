@@ -43,4 +43,4 @@ sam_media-*.tar
 /doc
 # Generated on crash by the VM
 erl_crash.dump
-payment/
+order/
