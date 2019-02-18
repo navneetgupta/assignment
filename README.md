@@ -52,6 +52,7 @@ mix deps.compile
 mix do event_store.create, event_store.init
 mix ecto.create
 mix ecto.migrate
+mix phx.swagger.generate
 mix phx.server
 ```
 
