@@ -39,9 +39,9 @@ Feel free to use your creativity to accomplish the task.
 
 -- WIP
 
--- Runing the code
--- Require Redis for clustering
--- reuqire postgres configuration in config/dev.exs
+-- Runing the code  
+-- Require Redis for clustering  
+-- reuqire postgres configuration in config/dev.exs  
 ```elixir
 export NODE="sam_media"
 export PORT=4000
@@ -56,7 +56,7 @@ mix phx.swagger.generate
 mix phx.server
 ```
 
-## Open http://localhost:4000/swagger/index.html#/
+## Open http://localhost:4000/swagger/index.html#/  
 
 For testing
 ```elixir
@@ -72,3 +72,14 @@ mix ecto.create
 mix ecto.migrate
 mix test
 ```
+
+
+
+
+
+
+Pros Of Solution:
+* CQRS based application  
+* Read Projection can be destroyed and created as useful  
+* Horizontally scalable with Just Config changes. No Codebase touch  
+* Hot Code reloading with Simple steps.
