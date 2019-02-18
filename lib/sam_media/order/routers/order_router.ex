@@ -7,6 +7,7 @@ defmodule SamMedia.Order.Routers.OrderRouter do
     CreateOrder,
     CompleteOrder,
     DeliverOrder,
+    InitiateOrderCancellation,
     CancelOrder
   }
 
@@ -18,5 +19,6 @@ defmodule SamMedia.Order.Routers.OrderRouter do
   dispatch(CreateOrder, to: Order, identity: :uuid)
   dispatch(CompleteOrder, to: Order, identity: :order_uuid)
   dispatch(DeliverOrder, to: Order, identity: :order_uuid)
+  dispatch(InitiateOrderCancellation, to: Order, identity: :order_uuid)
   dispatch(CancelOrder, to: Order, identity: :order_uuid)
 end

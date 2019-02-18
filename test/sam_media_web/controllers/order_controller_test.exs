@@ -9,7 +9,7 @@ defmodule SamMediaWeb.OrderControllerTest do
 
   describe "list orders" do
     test "should list down all the orders", %{conn: conn} do
-      conn = get(conn, order_path(conn, :index))
+      conn = get(conn, order_path(conn, :list_order))
       assert json_response(conn, 200)["data"] == []
     end
   end

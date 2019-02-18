@@ -27,6 +27,6 @@ config :eventstore, EventStore.Storage,
 config :sam_media, SamMedia.Repo,
   username: "postgres",
   password: "postgres",
-  database: "sam_media_test",
+  database: "sam_media_readstore_test",
   hostname: "localhost",
   pool_size: 10

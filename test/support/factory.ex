@@ -1,8 +1,20 @@
 defmodule SamMedia.Factory do
   use ExMachina
 
-  alias SamMedia.Payment.Commands.{InitiatePayment, CompletePayment, ProcessRefund}
-  alias SamMedia.Order.Commands.{CreateOrder, CancelOrder, CompleteOrder, DeliverOrder}
+  alias SamMedia.Payment.Commands.{
+    InitiatePayment,
+    CompletePayment,
+    InitiateRefund,
+    ProcessRefund
+  }
+
+  alias SamMedia.Order.Commands.{
+    CreateOrder,
+    InitiateOrderCancellation,
+    CompleteOrder,
+    DeliverOrder,
+    CancelOrder
+  }
 
   def valid_payment_factory do
     %{
@@ -48,7 +60,8 @@ defmodule SamMedia.Factory do
   def refund_payment_factory do
     %{
       payment_uuid: UUID.uuid4(),
-      order_uuid: UUID.uuid4()
+      order_uuid: UUID.uuid4(),
+      txn_uuid: UUID.uuid4()
     }
   end
 
@@ -78,5 +91,17 @@ defmodule SamMedia.Factory do
 
   def deliver_order_factory do
     struct(DeliverOrder, %{})
+  end
+
+  def initate_cancel_order_factory do
+    struct(InitiateOrderCancellation, %{})
+  end
+
+  def cancel_order_factory do
+    struct(CancelOrder, %{})
+  end
+
+  def initiate_refund_factory do
+    struct(InitiateRefund, %{})
   end
 end

@@ -3,7 +3,8 @@ defmodule SamMedia.Order.Commands.CompleteOrder do
 
   defstruct order_uuid: "",
             payment_uuid: "",
-            status: ""
+            order_status: "",
+            payment_status: ""
 
   use ExConstructor
   use Vex.Struct

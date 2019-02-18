@@ -27,7 +27,7 @@ defmodule SamMedia.AggregateCase do
       end
 
       defp assert_error(commands, expected_error) do
-        assert_events(%@aggregate_module{}, commands, expected_error)
+        assert_error(%@aggregate_module{}, commands, expected_error)
       end
 
       defp assert_error(aggregate, commands, expected_error) do

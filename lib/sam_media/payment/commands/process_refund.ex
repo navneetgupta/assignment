@@ -2,13 +2,15 @@ defmodule SamMedia.Payment.Commands.ProcessRefund do
   alias __MODULE__
 
   defstruct payment_uuid: "",
-            order_uuid: ""
+            order_uuid: "",
+            txn_uuid: ""
 
   use ExConstructor
   use Vex.Struct
 
   validates(:payment_uuid, uuid: true)
   validates(:order_uuid, uuid: true)
+  validates(:txn_uuid, uuid: true)
 
   def assign_payment_uuid(%ProcessRefund{} = refund_process, payment_uuid) do
     %ProcessRefund{refund_process | payment_uuid: payment_uuid}

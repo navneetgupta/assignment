@@ -14,7 +14,8 @@ defmodule SamMedia.Application do
       # Start the endpoint when the application starts
       supervisor(SamMediaWeb.Endpoint, []),
       # Starts a worker by calling: SamMedia.Worker.start_link(arg)
-      supervisor(SamMedia.Order.Supervisor, [])
+      supervisor(SamMedia.Order.Supervisor, []),
+      supervisor(SamMedia.Payment.Supervisor, [])
       # {SamMedia.Worker, arg},
     ]
 

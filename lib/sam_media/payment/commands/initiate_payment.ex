@@ -20,7 +20,7 @@ defmodule SamMedia.Payment.Commands.InitiatePayment do
 
   validates(:order_uuid, uuid: true)
 
-  validates(:amount,
+  validates(:order_amount,
     presence: [message: "can't be empty"],
     amount: true
   )

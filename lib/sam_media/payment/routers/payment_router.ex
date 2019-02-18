@@ -6,7 +6,8 @@ defmodule SamMedia.Payment.Routers.PaymentRouter do
   alias SamMedia.Payment.Commands.{
     InitiatePayment,
     CompletePayment,
-    ProcessRefund
+    ProcessRefund,
+    InitiateRefund
   }
 
   alias SamMedia.Support.Validators.Validate
@@ -16,5 +17,6 @@ defmodule SamMedia.Payment.Routers.PaymentRouter do
 
   dispatch(InitiatePayment, to: Payment, identity: :uuid)
   dispatch(CompletePayment, to: Payment, identity: :payment_uuid)
+  dispatch(InitiateRefund, to: Payment, identity: :payment_uuid)
   dispatch(ProcessRefund, to: Payment, identity: :payment_uuid)
 end

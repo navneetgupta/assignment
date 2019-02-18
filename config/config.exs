@@ -21,6 +21,16 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :sam_media, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      # phoenix routes will be converted to swagger paths
+      router: SamMediaWeb.Router,
+      # (optional) endpoint config used to set host, port and https schemes.
+      endpoint: SamMediaWeb.Endpoint
+    ]
+  }
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 

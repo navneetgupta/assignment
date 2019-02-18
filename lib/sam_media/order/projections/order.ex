@@ -11,6 +11,7 @@ defmodule SamMedia.Order.Projections.Order do
     field(:status, :integer)
     field(:payment_uuid, :binary_id)
     field(:payment_status, :integer)
+    field(:refund_txn_uuid, :binary_id)
 
     timestamps()
   end

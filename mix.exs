@@ -7,7 +7,7 @@ defmodule SamMedia.MixProject do
       version: "0.0.1",
       elixir: "~> 1.8.0",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      compilers: [:phoenix, :gettext, :phoenix_swagger] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -47,7 +47,9 @@ defmodule SamMedia.MixProject do
       {:exconstructor, "~> 1.1.0"},
       {:commanded, "~> 0.18.0"},
       {:commanded_eventstore_adapter, "~> 0.5"},
-      {:ex_machina, "~> 2.1", only: :test}
+      {:ex_machina, "~> 2.1", only: :test},
+      {:phoenix_swagger, "~> 0.8"},
+      {:ex_json_schema, "~> 0.5"}
     ]
   end
 

@@ -10,7 +10,9 @@ defmodule SamMedia.Order.Supervisor do
   def init(_arg) do
     Supervisor.init(
       [
-        Order.Projectors.Order
+        Order.Projectors.Order,
+        Order.ProcessManager.OrderManager,
+        Order.ProcessManager.RefundManager
       ],
       strategy: :one_for_one
     )

@@ -6,7 +6,9 @@ defmodule SamMedia.Order.Enums.EnumsOrder do
       CREATED: 1,
       CONFIRMED: 2,
       DELIVERED: 3,
-      CANCELLED: 4
+      CANCELLED: 4,
+      CANCELLATION_INITIATED: 5,
+      CANCELLING: 6
     }
   end
 
@@ -15,7 +17,8 @@ defmodule SamMedia.Order.Enums.EnumsOrder do
       processing: 1,
       success: 2,
       declined: 3,
-      refunded: 4
+      refunded: 4,
+      refunding: 5
     }
   end
 end

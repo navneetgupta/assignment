@@ -54,3 +54,20 @@ mix ecto.create
 mix ecto.migrate
 mix phx.server
 ```
+
+## Open http://localhost:4000/swagger/index.html#/
+
+For testing
+```elixir
+export NODE="sam_media"
+export PORT=4000
+export MIX_ENV=test
+
+mix deps.get
+mix deps.compile
+
+mix do event_store.create, event_store.init
+mix ecto.create
+mix ecto.migrate
+mix test
+```

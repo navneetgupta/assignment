@@ -6,7 +6,8 @@ defmodule SamMedia.Payment.Enums.EnumsPayment do
       SUCCESS: 1,
       DECLINED: 2,
       REFUNDED: 3,
-      PROCESSING: 4
+      REFUND_PROCESSING: 4,
+      PROCESSING: 5
     }
   end
 end
