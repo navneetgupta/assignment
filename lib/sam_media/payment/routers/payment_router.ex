@@ -11,12 +11,13 @@ defmodule SamMedia.Payment.Routers.PaymentRouter do
   }
 
   alias SamMedia.Support.Validators.Validate
+  alias SamMedia.Payment.Aggregates.Lifespan.PaymentLifespan
 
   middleware(Commanded.Middleware.Logger)
   middleware(Validate)
 
-  dispatch(InitiatePayment, to: Payment, identity: :uuid)
-  dispatch(CompletePayment, to: Payment, identity: :payment_uuid)
-  dispatch(InitiateRefund, to: Payment, identity: :payment_uuid)
-  dispatch(ProcessRefund, to: Payment, identity: :payment_uuid)
+  dispatch(InitiatePayment, lifespan: PaymentLifespan, to: Payment, identity: :uuid)
+  dispatch(CompletePayment, lifespan: PaymentLifespan, to: Payment, identity: :payment_uuid)
+  dispatch(InitiateRefund, lifespan: PaymentLifespan, to: Payment, identity: :payment_uuid)
+  dispatch(ProcessRefund, lifespan: PaymentLifespan, to: Payment, identity: :payment_uuid)
 end

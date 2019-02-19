@@ -12,13 +12,14 @@ defmodule SamMedia.Order.Routers.OrderRouter do
   }
 
   alias SamMedia.Support.Validators.Validate
+  alias SamMedia.Order.Aggregates.Lifespan.OrderLifespan
 
   middleware(Commanded.Middleware.Logger)
   middleware(Validate)
 
-  dispatch(CreateOrder, to: Order, identity: :uuid)
-  dispatch(CompleteOrder, to: Order, identity: :order_uuid)
-  dispatch(DeliverOrder, to: Order, identity: :order_uuid)
-  dispatch(InitiateOrderCancellation, to: Order, identity: :order_uuid)
-  dispatch(CancelOrder, to: Order, identity: :order_uuid)
+  dispatch(CreateOrder, lifespan: OrderLifespan, to: Order, identity: :uuid)
+  dispatch(CompleteOrder, lifespan: OrderLifespan, to: Order, identity: :order_uuid)
+  dispatch(DeliverOrder, lifespan: OrderLifespan, to: Order, identity: :order_uuid)
+  dispatch(InitiateOrderCancellation, lifespan: OrderLifespan, to: Order, identity: :order_uuid)
+  dispatch(CancelOrder, lifespan: OrderLifespan, to: Order, identity: :order_uuid)
 end

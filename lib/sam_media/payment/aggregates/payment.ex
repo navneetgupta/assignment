@@ -82,7 +82,7 @@ defmodule SamMedia.Payment.Aggregates.Payment do
     }
   end
 
-  def execute(%Payment{uuid: nil}, %ProcessRefund{}), do: {:error, :invalid_payment}
+  def execute(%Payment{uuid: nil}, %ProcessRefund{}), do: {:error, :payment_dtls_not_found}
 
   def execute(%Payment{}, %ProcessRefund{} = refund) do
     %RefundProcessed{

@@ -170,7 +170,7 @@ defmodule SamMedia.Payment.Aggregates.PaymentTest do
             txn_uuid: uuid
           )
         ],
-        {:error, :invalid_payment}
+        {:error, :payment_dtls_not_found}
       )
     end
   end

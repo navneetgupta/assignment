@@ -40,6 +40,10 @@ config :commanded,
 config :commanded_ecto_projections,
   repo: SamMedia.Repo
 
+config :commanded, SamMedia.Order.Aggregates.Order,
+  snapshot_every: 5,
+  snapshot_version: 1
+
 config :eventstore, registry: :distributed
 
 config :vex,
