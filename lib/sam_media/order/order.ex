@@ -10,6 +10,7 @@ defmodule SamMedia.Order do
   @cancelled_status EnumsOrder.order_status()[:CANCELLED]
 
   def create_order(attrs \\ %{}) do
+    IO.puts("CreateOrder =======================")
     uuid = UUID.uuid4()
 
     create_order =
@@ -18,6 +19,7 @@ defmodule SamMedia.Order do
       |> CreateOrder.assign_uuid(uuid)
 
     with {:ok, version} <- Router.dispatch(create_order, include_aggregate_version: true) do
+      IO.puts("CreateOrder Subscribing to Event version #{version} =======================")
       OrderPubSub.wait_for(OrderPro, uuid, version)
     else
       reply -> reply

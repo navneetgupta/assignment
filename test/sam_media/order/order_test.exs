@@ -5,7 +5,6 @@ defmodule SamMedia.Order.OrderTest do
 
   describe "organizations" do
     alias SamMedia.Order.Projections.Order, as: OrderPro
-    alias SamMedia.Order.Enums.EnumsOrder
 
     @valid_create_order_attr %{
       card_number: "1234123412341234",
@@ -22,6 +21,29 @@ defmodule SamMedia.Order.OrderTest do
       {:ok, order} = f |> Order.create_order()
 
       order
+    end
+
+    test "list_orders/0 should list down all the orders" do
+      assert [] == Order.list_orders()
+    end
+
+    test "list_orders/0 should list down all the orders 2" do
+      order = order_fixture()
+      list = Order.list_orders()
+      assert length(list) == 1
+      assert hd(list).uuid == order.uuid
+    end
+
+    test "create_order/1 creates the order for the valid inputs" do
+      {:ok, order} = Order.create_order(@valid_create_order_attr)
+      assert %OrderPro{} = order
+    end
+
+    test "get_order/1 should get the order for valid UUID" do
+      order = order_fixture()
+      order_fetced = Order.get_order!(order.uuid)
+      assert %OrderPro{} = order_fetced
+      assert order.uuid == order_fetced.uuid
     end
   end
 end

@@ -29,7 +29,8 @@ defmodule SamMedia.Storage do
   defp truncate_readstore_tables do
     """
     TRUNCATE TABLE
-      orders
+      orders,
+      projection_versions
     RESTART IDENTITY;
     """
   end

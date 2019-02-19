@@ -20,7 +20,7 @@ defmodule SamMedia.MixProject do
   def application do
     [
       mod: {SamMedia.Application, []},
-      extra_applications: [:logger, :runtime_tools, :phoenix, :eventstore]
+      extra_applications: [:logger, :runtime_tools, :phoenix, :eventstore, :phoenix_pubsub_redis]
     ]
   end
 
@@ -43,11 +43,11 @@ defmodule SamMedia.MixProject do
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.0"},
       {:vex, "~> 0.7"},
-      {:commanded_ecto_projections, "~> 0.8"},
+      {:commanded_ecto_projections, "~> 0.8.0"},
       {:exconstructor, "~> 1.1.0"},
       {:commanded, "~> 0.18.0"},
       {:commanded_eventstore_adapter, "~> 0.5"},
-      {:ex_machina, "~> 2.1", only: :test},
+      {:ex_machina, "~> 2.2", only: :test},
       {:phoenix_swagger, "~> 0.8"},
       {:ex_json_schema, "~> 0.5"}
     ]
