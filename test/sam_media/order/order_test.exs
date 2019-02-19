@@ -3,7 +3,7 @@ defmodule SamMedia.Order.OrderTest do
 
   alias SamMedia.Order
 
-  describe "organizations" do
+  describe "orders" do
     alias SamMedia.Order.Projections.Order, as: OrderPro
 
     @valid_create_order_attr %{

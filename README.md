@@ -74,6 +74,12 @@ mix test
 ```
 
 
+## Coverage Report  
+```elixir
+MIX_ENV=test mix coveralls.html
+```
+
+* Report generated at {project_root/cover/excoveralls.html}  
 
 
 

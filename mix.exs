@@ -10,7 +10,14 @@ defmodule SamMedia.MixProject do
       compilers: [:phoenix, :gettext, :phoenix_swagger] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -49,7 +56,8 @@ defmodule SamMedia.MixProject do
       {:commanded_eventstore_adapter, "~> 0.5"},
       {:ex_machina, "~> 2.2", only: :test},
       {:phoenix_swagger, "~> 0.8"},
-      {:ex_json_schema, "~> 0.5"}
+      {:ex_json_schema, "~> 0.5"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
