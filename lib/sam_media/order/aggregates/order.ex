@@ -42,11 +42,7 @@ defmodule SamMedia.Order.Aggregates.Order do
     {:error, :invalid_order_amount}
   end
 
-  def execute(%Order{} = order, %CreateOrder{} = create) do
-    IO.puts("Aggregate------------------------------")
-    IO.inspect(order)
-    IO.inspect(create)
-
+  def execute(%Order{}, %CreateOrder{} = create) do
     %OrderCreated{
       order_uuid: create.uuid,
       card_number: create.card_number,
@@ -61,12 +57,7 @@ defmodule SamMedia.Order.Aggregates.Order do
 
   def execute(%Order{uuid: nil}, %CompleteOrder{}), do: {:error, :invalid_order}
 
-  def execute(%Order{} = order, %CompleteOrder{order_status: status} = complete) do
-    IO.puts("Aggregate---------CompleteOrder---------------------")
-    IO.inspect(order)
-    IO.inspect(complete)
-    IO.puts("Aggregate---------CompleteOrder Finish---------------------")
-
+  def execute(%Order{}, %CompleteOrder{order_status: status} = complete) do
     %OrderCompleted{
       order_uuid: complete.order_uuid,
       payment_uuid: complete.payment_uuid,
@@ -129,26 +120,16 @@ defmodule SamMedia.Order.Aggregates.Order do
         %Order{
           uuid: uuid,
           payment_uuid: payment_uuid
-        } = order,
-        %InitiateOrderCancellation{} = cancellation
+        },
+        %InitiateOrderCancellation{}
       ) do
-    IO.puts(" AGGREGATE =============InitiateOrderCancellation")
-    IO.inspect(cancellation)
-    IO.inspect(order)
-    IO.puts(" AGGREGATE =============InitiateOrderCancellation")
-
     %OrderCancellationInitiated{
       order_uuid: uuid,
       payment_uuid: payment_uuid
     }
   end
 
-  def execute(%Order{} = order, %CancelOrder{} = cancel) do
-    IO.puts(" AGGREGATE =============CancelOrder")
-    IO.inspect(cancel)
-    IO.inspect(order)
-    IO.puts(" AGGREGATE =============CancelOrder")
-
+  def execute(%Order{}, %CancelOrder{} = cancel) do
     %OrderCancelled{
       order_uuid: cancel.order_uuid,
       refund_txn_id: cancel.txn_uuid
@@ -189,11 +170,6 @@ defmodule SamMedia.Order.Aggregates.Order do
   end
 
   def apply(%Order{} = order, %OrderCancelled{} = cancelled) do
-    IO.puts(" AGGREGATE =============OrderCancelled ")
-    IO.inspect(cancelled)
-    IO.inspect(order)
-    IO.puts(" AGGREGATE =============OrderCancelled")
-
     %Order{
       order
       | status: EnumsOrder.order_status()[:CANCELLED],

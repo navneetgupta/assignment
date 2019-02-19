@@ -1,6 +1,6 @@
 defmodule SamMedia.Payment.Aggregates.Payment do
   alias __MODULE__
-  import Integer
+  alias Integer
 
   @moduledoc """
 
@@ -34,12 +34,7 @@ defmodule SamMedia.Payment.Aggregates.Payment do
   @successful_payment EnumsPayment.payment_status()[:SUCCESS]
   @processing_refund EnumsPayment.payment_status()[:REFUND_PROCESSING]
 
-  def execute(%Payment{uuid: nil} = z, %InitiatePayment{} = payment) do
-    IO.puts("============Execute Initiate Payment==============")
-    IO.inspect(payment)
-    IO.inspect(z)
-    IO.puts("============Execute Initiate Payment Finish==============")
-
+  def execute(%Payment{uuid: nil}, %InitiatePayment{} = payment) do
     %PaymentIntitated{
       payment_uuid: payment.uuid,
       amount: payment.order_amount,
@@ -52,14 +47,9 @@ defmodule SamMedia.Payment.Aggregates.Payment do
   end
 
   def execute(
-        %Payment{uuid: uuid, amount: amount, order_uuid: order_uuid} = z,
+        %Payment{uuid: uuid, amount: amount, order_uuid: order_uuid},
         %CompletePayment{} = complete
       ) do
-    IO.puts("============Execute CompletePayment Payment==============")
-    IO.inspect(complete)
-    IO.inspect(z)
-    IO.puts("============Execute CompletePayment Payment Finish==============")
-
     %PaymentCompleted{
       payment_uuid: uuid,
       txn_uuid: complete.txn_uuid,
@@ -74,29 +64,18 @@ defmodule SamMedia.Payment.Aggregates.Payment do
   def execute(%Payment{status: status}, %InitiateRefund{}) when status == @processing_refund,
     do: {:error, :refund_already_in_process}
 
-  def execute(%Payment{status: status} = payment, %InitiateRefund{} = initiate)
-      when status != @successful_payment do
-    IO.puts("============Execute 2 InitiateRefund Payment #{@successful_payment}==============")
-    IO.inspect(initiate)
-    IO.inspect(payment)
-    IO.puts("============Execute 2 InitiateRefund Payment Finish==============")
-
-    {:error, :payment_dtls_not_found}
-  end
+  def execute(%Payment{status: status}, %InitiateRefund{})
+      when status != @successful_payment,
+      do: {:error, :payment_dtls_not_found}
 
   def execute(%Payment{order_uuid: order_uuid}, %InitiateRefund{order_uuid: refund_order_uuid})
       when order_uuid !== refund_order_uuid,
       do: {:error, :invalid_order_for_refund}
 
   def execute(
-        %Payment{uuid: uuid} = z,
-        %InitiateRefund{payment_uuid: payment_uuid, order_uuid: order_uuid} = initiate
+        %Payment{uuid: uuid},
+        %InitiateRefund{order_uuid: order_uuid}
       ) do
-    IO.puts("============Execute InitiateRefund Payment==============")
-    IO.inspect(initiate)
-    IO.inspect(z)
-    IO.puts("============Execute InitiateRefund Payment Finish==============")
-
     %RefundInitiated{
       payment_uuid: uuid,
       order_uuid: order_uuid
@@ -105,7 +84,7 @@ defmodule SamMedia.Payment.Aggregates.Payment do
 
   def execute(%Payment{uuid: nil}, %ProcessRefund{}), do: {:error, :invalid_payment}
 
-  def execute(%Payment{status: status}, %ProcessRefund{} = refund) do
+  def execute(%Payment{}, %ProcessRefund{} = refund) do
     %RefundProcessed{
       order_uuid: refund.order_uuid,
       payment_uuid: refund.payment_uuid,
@@ -114,11 +93,6 @@ defmodule SamMedia.Payment.Aggregates.Payment do
   end
 
   def apply(%Payment{} = payment, %PaymentIntitated{} = payment_initiated) do
-    IO.puts("============Apply PaymentIntitated Payment==============")
-    IO.inspect(payment_initiated)
-    IO.inspect(payment)
-    IO.puts("============Apply PaymentIntitated Payment Finish==============")
-
     %Payment{
       payment
       | uuid: payment_initiated.payment_uuid,
@@ -129,11 +103,6 @@ defmodule SamMedia.Payment.Aggregates.Payment do
   end
 
   def apply(%Payment{} = payment, %PaymentCompleted{} = payment_completed) do
-    IO.puts("============Apply PaymentCompleted Payment==============")
-    IO.inspect(payment_completed)
-    IO.inspect(payment)
-    IO.puts("============Apply PaymentCompleted Payment Finish==============")
-
     %Payment{
       payment
       | transaction_uuid: payment_completed.txn_uuid,
@@ -141,12 +110,7 @@ defmodule SamMedia.Payment.Aggregates.Payment do
     }
   end
 
-  def apply(%Payment{} = payment, %RefundInitiated{} = initiated) do
-    IO.puts("============Apply RefundInitiated Payment==============")
-    IO.inspect(initiated)
-    IO.inspect(payment)
-    IO.puts("============Apply RefundInitiated Payment Finish==============")
-
+  def apply(%Payment{} = payment, %RefundInitiated{}) do
     %Payment{
       payment
       | status: EnumsPayment.payment_status()[:REFUND_PROCESSING]
@@ -154,11 +118,6 @@ defmodule SamMedia.Payment.Aggregates.Payment do
   end
 
   def apply(%Payment{} = payment, %RefundProcessed{} = refund_processed) do
-    IO.puts("============Apply RefundProcessed Payment==============")
-    IO.inspect(refund_processed)
-    IO.inspect(payment)
-    IO.puts("============Apply RefundProcessed Payment Finish==============")
-
     %Payment{
       payment
       | refund_txn_uuid: refund_processed.txn_uuid,

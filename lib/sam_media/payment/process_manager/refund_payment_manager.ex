@@ -13,7 +13,6 @@ defmodule SamMedia.Payment.ProcessManager.RefundPaymentManager do
 
   alias SamMedia.Payment.Events.{RefundInitiated, RefundProcessed}
   alias SamMedia.Payment.Commands.ProcessRefund
-  alias SamMedia.Payment.Enums.EnumsPayment
   def interested?(%RefundInitiated{payment_uuid: payment_uuid}), do: {:start, payment_uuid}
   def interested?(%RefundProcessed{payment_uuid: payment_uuid}), do: {:stop, payment_uuid}
 

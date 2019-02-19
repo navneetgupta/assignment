@@ -19,10 +19,6 @@ defmodule SamMedia.Payment.ProcessManager.PaymentManager do
   def interested?(%PaymentCompleted{payment_uuid: payment_uuid}), do: {:stop, payment_uuid}
 
   def handle(%PaymentManager{}, %PaymentIntitated{card_number: card_number} = initiated) do
-    IO.puts("================Payment Manager PaymentIntitated==========")
-    IO.inspect(initiated)
-    IO.puts("================Payment Manager PaymentIntitated Finished==========")
-
     cond do
       String.split_at(card_number, -2) |> elem(1) |> String.to_integer() |> Integer.is_even() ==
           true ->
@@ -42,11 +38,6 @@ defmodule SamMedia.Payment.ProcessManager.PaymentManager do
   end
 
   def apply(%PaymentManager{} = payment_pm, %PaymentIntitated{} = initiated) do
-    IO.puts("================Apply Payment Manager PaymentIntitated==========")
-    IO.inspect(initiated)
-    IO.inspect(payment_pm)
-    IO.puts("================Apply Payment Manager PaymentIntitated Finished==========")
-
     %PaymentManager{
       payment_pm
       | payment_uuid: initiated.payment_uuid,

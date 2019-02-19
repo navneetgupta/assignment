@@ -26,12 +26,7 @@ defmodule SamMedia.Order.ProcessManager.RefundManager do
     }
   end
 
-  def handle(%RefundManager{} = rm, %RefundProcessed{} = refund_processed) do
-    IO.puts("=========PM RefundManager =============")
-    IO.inspect(refund_processed)
-    IO.inspect(rm)
-    IO.puts("=========PM RefundManager FInished=============")
-
+  def handle(%RefundManager{}, %RefundProcessed{} = refund_processed) do
     %CancelOrder{
       order_uuid: refund_processed.order_uuid,
       payment_uuid: refund_processed.payment_uuid,

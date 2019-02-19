@@ -218,17 +218,17 @@ defmodule SamMedia.Payment.Aggregates.PaymentTest do
     ]
   end
 
-  defp initiate_invalid_payment(_ctx) do
-    uuid = UUID.uuid4()
-    order_uuid = UUID.uuid4()
-
-    {payment, _events, _error} =
-      execute(List.wrap(build(:initiate_invalid_payment, uuid: uuid, order_uuid: order_uuid)))
-
-    [
-      payment: payment
-    ]
-  end
+  # defp initiate_invalid_payment(_ctx) do
+  #   uuid = UUID.uuid4()
+  #   order_uuid = UUID.uuid4()
+  #
+  #   {payment, _events, _error} =
+  #     execute(List.wrap(build(:initiate_invalid_payment, uuid: uuid, order_uuid: order_uuid)))
+  #
+  #   [
+  #     payment: payment
+  #   ]
+  # end
 
   defp complete_payment(%{payment: payment}) do
     uuid = UUID.uuid4()

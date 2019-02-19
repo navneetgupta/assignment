@@ -11,12 +11,8 @@ defmodule SamMedia.Order.Projectors.Order do
   alias SamMedia.Order.Enums.EnumsOrder
   alias SamMedia.Order.Queries.OrderQuery
   alias Ecto.Multi
-  alias SamMedia.Repo
 
   project(%OrderCreated{} = created, %{stream_version: version}, fn multi ->
-    IO.puts("Projectors OrderCreated  #{version}=====================")
-    IO.inspect(created)
-
     Ecto.Multi.insert(multi, :order, %OrderPro{
       uuid: created.order_uuid,
       user_name: created.user_name,
@@ -28,9 +24,6 @@ defmodule SamMedia.Order.Projectors.Order do
   end)
 
   project(%OrderCompleted{} = completed, %{stream_version: version}, fn multi ->
-    IO.puts("Projectors OrderCompleted  #{version}=====================")
-    IO.inspect(completed)
-
     multi
     |> Multi.update_all(
       :order,
@@ -48,9 +41,6 @@ defmodule SamMedia.Order.Projectors.Order do
   end)
 
   project(%OrderDelivered{} = delivered, %{stream_version: version}, fn multi ->
-    IO.puts("Projectors OrderDelivered  #{version}=====================")
-    IO.inspect(delivered)
-
     multi
     |> Multi.update_all(
       :order,
@@ -66,9 +56,6 @@ defmodule SamMedia.Order.Projectors.Order do
   end)
 
   project(%OrderCancelled{} = cancelled, %{stream_version: version}, fn multi ->
-    IO.puts("Projectors OrderCancelled  #{version}=====================")
-    IO.inspect(cancelled)
-
     multi
     |> Multi.update_all(
       :order,
@@ -86,9 +73,6 @@ defmodule SamMedia.Order.Projectors.Order do
   end)
 
   def after_update(_event, _metadata, changes) do
-    IO.puts("after_update------------------------------")
-    IO.inspect(changes)
-
     spawn(fn ->
       schedule(changes)
     end)

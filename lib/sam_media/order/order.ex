@@ -10,7 +10,6 @@ defmodule SamMedia.Order do
   @cancelled_status EnumsOrder.order_status()[:CANCELLED]
 
   def create_order(attrs \\ %{}) do
-    IO.puts("CreateOrder =======================")
     uuid = UUID.uuid4()
 
     create_order =
@@ -19,7 +18,6 @@ defmodule SamMedia.Order do
       |> CreateOrder.assign_uuid(uuid)
 
     with {:ok, version} <- Router.dispatch(create_order, include_aggregate_version: true) do
-      IO.puts("CreateOrder Subscribing to Event version #{version} =======================")
       OrderPubSub.wait_for(OrderPro, uuid, version)
     else
       reply -> reply
@@ -33,18 +31,11 @@ defmodule SamMedia.Order do
   def get_order!(uuid), do: Repo.get!(OrderPro, uuid)
 
   def cancel_order(uuid) do
-    IO.puts("========Order root Cancel======")
-    IO.puts("=========#{uuid}")
-
     case(Repo.get(OrderPro, uuid)) do
       nil ->
-        IO.puts("=========#{uuid} Not found")
         {:error, :order_not_found}
 
       %OrderPro{uuid: uuid, status: status} = order ->
-        IO.puts("=========#{uuid} found")
-        IO.inspect(order)
-
         cond do
           status === @cancelled_status ->
             {:ok, order}
@@ -66,7 +57,6 @@ defmodule SamMedia.Order do
   def get_order(uuid) do
     case(Repo.get(OrderPro, uuid)) do
       nil ->
-        IO.puts("=========#{uuid} Not found")
         {:error, :order_not_found}
 
       %OrderPro{} = order ->

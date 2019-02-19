@@ -34,10 +34,6 @@ defmodule SamMedia.Order.ProcessManager.OrderManager do
   def interested?(%OrderDelivered{order_uuid: order_uuid}), do: {:stop, order_uuid}
 
   def handle(%OrderManager{}, %OrderCreated{} = created) do
-    IO.puts("================Order Manager OrderCreated==========")
-    IO.inspect(created)
-    IO.puts("================Order Manager OrderCreated Finished==========")
-
     %InitiatePayment{
       uuid: UUID.uuid4(),
       order_uuid: created.order_uuid,
@@ -50,14 +46,9 @@ defmodule SamMedia.Order.ProcessManager.OrderManager do
   end
 
   def handle(
-        %OrderManager{} = z,
+        %OrderManager{},
         %PaymentCompleted{status: status} = completed
       ) do
-    IO.puts("================Order Manager PaymentCompleted==========")
-    IO.inspect(completed)
-    IO.inspect(z)
-    IO.puts("================Order Manager PaymentCompleted Finished==========")
-
     cond do
       status === @payment_success ->
         %CompleteOrder{
@@ -78,15 +69,9 @@ defmodule SamMedia.Order.ProcessManager.OrderManager do
   end
 
   def handle(
-        %OrderManager{order_uuid: order_uuid} = z,
-        %OrderCompleted{order_status: status} = completed
+        %OrderManager{order_uuid: order_uuid},
+        %OrderCompleted{order_status: status}
       ) do
-    IO.puts("================Order Manager OrderCompleted==========")
-    IO.inspect(completed)
-    IO.inspect(z)
-    IO.puts("order status #{@order_success}")
-    IO.puts("================Order Manager OrderCompleted Finished==========")
-
     cond do
       status === @order_success ->
         %DeliverOrder{
